@@ -24,14 +24,24 @@ if ($user && password_verify($data->password, $user['password'])) {
         "iss" => "localhost",
         "iat" => time(),
         "exp" => time() + (60 * 60),
-        "data" => ["id" => $user['id'], "email" => $user['email']]
+        "data" => ["id" => $user['id'], "email" => $user['email'], "role" => $user['role']]
     ];
 
-    $jwt = JWT::encode($payload, $secret_key, 'HS256');
+    $access_token = JWT::encode($access_payload, $secret_key, 'HS256');
+
+    // Gerar Refresh Token (expira em 7 dias)
+    $refresh_token = bin2hex(random_bytes(32));
+
+    // Salvar refresh token no banco
+    $stmt_update = $db->prepare("UPDATE users SET refresh_token = :refresh WHERE id = :id");
+    $stmt_update->bindParam(":refresh", $refresh_token);
+    $stmt_update->bindParam(":id", $user['id']);
+    $stmt_update->execute();
 
     echo json_encode([
         "message" => "Login bem-sucedido.",
-        "jwt" => $jwt
+        "access_token" => $access_token,
+        "refresh_token" => $refresh_token
     ]);
 } else {
     http_response_code(401);

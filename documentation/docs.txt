@@ -1,0 +1,21 @@
+API de cadastro (em PHP)	
+	
+1	Estrutura do projeto
+2	Configurar a conexão
+3	Instalar JWT via Composer
+4	Registro de usuário
+5	Login e geração do token JWT
+6	Listar usuários autenticados
+7	Atualizar e deletar usuários
+8	Testar (com Postman ou Insomnia)
+	
+Implementar “refresh token”	
+1	Alterar a tabela “users”
+2	Gerar o refresh token no login.php
+3	Criar o endpoint api/refresh.php 
+	
+Implementar roles (admin / user)	
+1	Atualizar tabela users
+2	Incluir o role no token JWT (em login.php e refresh.php) 
+3	Criar middleware de verificação de role (por exemplo, check_admin.php) [RBAC]
+4	Exemplo de endpoint protegido por admin (api/delete_user.php) 
