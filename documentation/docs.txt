@@ -56,3 +56,22 @@ Passos:
     1   Criar arquivo api/promote_user.php
         O que faz: Permite que um admin promova outro usuário a admin. Usa authenticate(true) para restringir acesso.
     2   Testar (com Postman ou Insomnia)
+
+Task: Implementar acesso ao próprio perfil (Owner-Based Access)
+Objetivo: Garantir que um usuário só possa visualizar ou editar o próprio perfil, a menos que seja administrador.
+Passos:
+    1.  Criar arquivo api/profile.php
+    2.  Testar (com Postman ou Insomnia)
+Explicação:
+    O token JWT contém o id do usuário autenticado ($user->id).
+    O sistema permite ver outro perfil apenas se for admin.
+    Um usuário comum só pode acessar o seu próprio perfil.
+
+Task: Logout Seguro (invalidando o refresh token)
+Objetivo: Quando o usuário faz logout, o refresh token é apagado do banco, impedindo que ele gere novos tokens.
+Passos:
+    1.  Criar o endpoint api/logout.php
+    2.  Testar (com Postman ou Insomnia)
+Explicação:
+    O JWT ainda existe, mas expira logo.
+    O refresh token, que permitiria renovação, é removido do banco.
