@@ -3,6 +3,7 @@
     include_once "../config/Database.php";
 
     $data = json_decode(file_get_contents("php://input"));
+    var_dump($data);
 
     if (!empty($data->id) && !empty($data->name) && !empty($data->email) && !empty($data->password)) {
 

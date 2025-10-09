@@ -1,21 +1,58 @@
-API de cadastro (em PHP)	
+ --- API de cadastro de usuários (em PHP) ---
+
+Task: CRUD, conexão ao banco e login
+Passos iniciais:
+    1.	Estrutura do projeto
+    2.	Configurar a conexão
+    3.	Instalar JWT via Composer
+    4.	Registro de usuário
+    5.	Login e geração do token JWT
+        Access Token; O que faz: autentica requisições; Armazenado em: Cabeçalho HTTP (Authorization)
+    6.	Listar usuários autenticados
+    7.	Atualizar e deletar usuários
+    8.	Testar (com Postman ou Insomnia)
+
 	
-1	Estrutura do projeto
-2	Configurar a conexão
-3	Instalar JWT via Composer
-4	Registro de usuário
-5	Login e geração do token JWT
-6	Listar usuários autenticados
-7	Atualizar e deletar usuários
-8	Testar (com Postman ou Insomnia)
+Task: Implementar “refresh token”
+Objetivo:
+    Renovar "access token", armazenado no banco de dados como uma string aleatória
+Passos:
+    1.	Alterar a tabela “users”
+    2.	Gerar o refresh token no login.php
+    3.	Criar o endpoint api/refresh.php 
 	
-Implementar “refresh token”	
-1	Alterar a tabela “users”
-2	Gerar o refresh token no login.php
-3	Criar o endpoint api/refresh.php 
-	
-Implementar roles (admin / user)	
-1	Atualizar tabela users
-2	Incluir o role no token JWT (em login.php e refresh.php) 
-3	Criar middleware de verificação de role (por exemplo, check_admin.php) [RBAC]
-4	Exemplo de endpoint protegido por admin (api/delete_user.php) 
+
+Task: Implementar roles (admin / user)
+Objetivo: Definir permissões de usuário
+Passos:
+    1.	Atualizar tabela users (com coluna "role" (por exemplo))
+    2.	Incluir o role no token JWT (em login.php e refresh.php) 
+    3.	Criar middleware de verificação de role (por exemplo, check_admin.php) [RBAC]
+    4.	Exemplo de endpoint protegido por admin (api/delete_user.php)
+
+Exemplo prático:
+    Registrar novo usuário; Rota: /api/register.php; Quem pode: Todos
+    Listar todos os usuários; Rota: /api/users.php; Quem pode: Qualquer autenticado
+    Deletar usuário; Rota: /api/delete_user.php; Quem pode: Somente admin
+    Atualizar o próprio perfil; Rota: /api/update.php; Quem pode: Usuário logado
+    Renovar token; Rota: /api/refesh.php; Quem pode: Todos com refresh token válido
+
+
+Task: Criar função genérica de autenticação
+Objetivos:
+    Evitar repetir o mesmo código de autenticação (JWT, validação, etc.) em todos os endpoints.
+    Retornar as informações do usuário autenticado (id, email, role).
+    Proteger automaticamente as rotas que precisam de login.
+Passos:
+    1.  Criar arquivo "api/auth.php"
+        Função authenticate()
+        O que faz: Verifica o token JWT, valida expiração, decodifica e retorna os dados do usuário.
+        Função: authenticate(true)
+        O que faz: Igual ao anterior, mas exige que o usuário tenha role = admin.
+
+
+Task: Criar endpoint "admin" para promover usuários à admin
+Passos:
+    1   Criar arquivo api/promote_user.php
+        O que faz: Permite que um admin promova outro usuário a admin. Usa authenticate(true) para restringir acesso.
+    2   Testar (com Postman ou Insomnia)

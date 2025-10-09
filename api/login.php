@@ -20,7 +20,7 @@ $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($user && password_verify($data->password, $user['password'])) {
-    $payload = [
+    $access_payload = [
         "iss" => "localhost",
         "iat" => time(),
         "exp" => time() + (60 * 60),
