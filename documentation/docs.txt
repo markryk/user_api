@@ -75,3 +75,14 @@ Passos:
 Explicação:
     O JWT ainda existe, mas expira logo.
     O refresh token, que permitiria renovação, é removido do banco.
+
+Task: Logs de Atividade (Auditoria)
+Objetivo: Registrar quem promoveu quem — útil para auditoria, segurança e histórico de ações.
+Passos:
+    1.  Criar tabela activity_logs
+    2.  Alterar api/promote_user.php para registrar logs
+    3.  Criar endpoint para visualizar logs (somente admin)
+Explicação:
+    Cada ação relevante (como promover alguém) é salva em activity_logs.
+    O log guarda: quem fez (admin_id), o que fez (action) e em quem (target_user_id).
+    O endpoint /api/logs.php mostra esse histórico — apenas para admins.
