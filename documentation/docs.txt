@@ -108,3 +108,15 @@ Passos:
 Explicação:
     page e limit → controlam a paginação.
     action e user → permitem filtrar por tipo de ação ou nome.
+
+
+Task: Envio de emails automáticos
+Objetivo: Enviar notificações por email em ações importantes, como promoção de usuário.
+Passos:
+    1.  Instalar biblioteca de envio de email (p. ex. PHPMailer)
+    2.  Criar o arquivo api/mailer.php
+    3.  Atualizar api/promote_user.php para enviar email
+Explicação:
+    O PHPMailer faz o envio via SMTP (ex: Gmail, Outlook, etc.).
+    Ao promover um usuário, ele recebe uma notificação automática.
+    Pode-se adaptar para outras ações (cadastro, reset de senha, etc.).

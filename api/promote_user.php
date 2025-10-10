@@ -1,6 +1,8 @@
 <?php
     include_once "../config/Database.php";
     include_once "auth.php";
+    include_once "mailer.php";
+    include_once "logger.php";
 
     header("Content-Type: application/json; charset=UTF-8");
 
@@ -35,20 +37,41 @@
         exit;
     }
 
+    if ($stmt->execute()) {
+        logActivity($admin->id, "Promoveu usuário a admin", $data->id);
+
+        // Busca email do promovido
+        $stmtMail = $db->prepare("SELECT email, name FROM users WHERE id = :id");
+        $stmtMail->bindParam(":id", $data->id);
+        $stmtMail->execute();
+        $promoted = $stmtMail->fetch(PDO::FETCH_ASSOC);
+
+        // Envia email de notificação
+        $subject = "Você foi promovido a administrador!";
+        $body = "<p>Olá <strong>{$promoted['name']}</strong>,</p>
+                <p>Parabéns! Você foi promovido a <b>administrador</b> do sistema.</p>
+                <p>— Equipe API</p>";
+
+        sendMail($promoted['email'], $subject, $body);
+
+        echo json_encode(["message" => "Usuário promovido e notificado com sucesso."]);
+    }
+
+    // Código antigo, implementado antes da task de envio de email
     // Atualiza o role
-    $stmt = $db->prepare("UPDATE users SET role = 'admin' WHERE id = :id");
+    /*$stmt = $db->prepare("UPDATE users SET role = 'admin' WHERE id = :id");
     $stmt->bindParam(":id", $data->id);
     $stmt->execute();
 
     // Registra log de atividade
     $log = $db->prepare("INSERT INTO activity_logs (admin_id, action, target_user_id) VALUES (:admin, 'Promoveu usuário a admin', :target)");
     // Registra que foi promovido à admin
-    logActivity($user->id, "Logout realizado", null, "Email: {$user->email}");
+    //logActivity($user->id, "Logout realizado", null, "Email: {$user->email}");
     $log->bindParam(":admin", $admin->id);
     $log->bindParam(":target", $data->id);
     $log->execute();
 
-    echo json_encode(["message" => "Usuário promovido a admin com sucesso e log registrado."]);
+    echo json_encode(["message" => "Usuário promovido a admin com sucesso e log registrado."]);*/
 
     //Código antigo, implementado antes da task de logs
     /*if ($stmt->execute()) {
