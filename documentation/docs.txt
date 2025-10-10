@@ -57,6 +57,7 @@ Passos:
         O que faz: Permite que um admin promova outro usuário a admin. Usa authenticate(true) para restringir acesso.
     2   Testar (com Postman ou Insomnia)
 
+
 Task: Implementar acesso ao próprio perfil (Owner-Based Access)
 Objetivo: Garantir que um usuário só possa visualizar ou editar o próprio perfil, a menos que seja administrador.
 Passos:
@@ -67,6 +68,7 @@ Explicação:
     O sistema permite ver outro perfil apenas se for admin.
     Um usuário comum só pode acessar o seu próprio perfil.
 
+
 Task: Logout Seguro (invalidando o refresh token)
 Objetivo: Quando o usuário faz logout, o refresh token é apagado do banco, impedindo que ele gere novos tokens.
 Passos:
@@ -75,6 +77,7 @@ Passos:
 Explicação:
     O JWT ainda existe, mas expira logo.
     O refresh token, que permitiria renovação, é removido do banco.
+
 
 Task: Logs de Atividade (Auditoria)
 Objetivo: Registrar quem promoveu quem — útil para auditoria, segurança e histórico de ações.
@@ -87,6 +90,7 @@ Explicação:
     O log guarda: quem fez (admin_id), o que fez (action) e em quem (target_user_id).
     O endpoint /api/logs.php mostra esse histórico — apenas para admins.
 
+
 Task: Implementar logs automáticos com uma função reutilizável
 Objetivo: Criar uma única função capaz de registrar qualquer ação importante (login, update, delete, promote, etc.), 
 afim de poder registrar logs em qualquer lugar da API com uma simples chamada.
@@ -95,3 +99,12 @@ Passos:
     2.  Atualizar a tabela activity_logs
     3.  Usar a função nos principais endpoints (login, update, delete_user)
 Explicação: A função logActivity() centraliza todos os registros, e pode ser chamada de onde for necessário (login, update, delete, etc)
+
+
+Task: Paginação e Filtros nos logs
+Objetivo: Permitir que um admin consulte os logs com: Paginação (limite e página) e filtro (por ação, data ou usuário)
+Passos:
+    1.  Novo endpoint: api/logs.php
+Explicação:
+    page e limit → controlam a paginação.
+    action e user → permitem filtrar por tipo de ação ou nome.
