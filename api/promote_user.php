@@ -42,6 +42,8 @@
 
     // Registra log de atividade
     $log = $db->prepare("INSERT INTO activity_logs (admin_id, action, target_user_id) VALUES (:admin, 'Promoveu usuário a admin', :target)");
+    // Registra que foi promovido à admin
+    logActivity($user->id, "Logout realizado", null, "Email: {$user->email}");
     $log->bindParam(":admin", $admin->id);
     $log->bindParam(":target", $data->id);
     $log->execute();

@@ -1,17 +1,33 @@
 <?php
     header("Content-Type: application/json; charset=UTF-8");
     include_once "../config/Database.php";
+    include_once "auth.php";
+    include_once "logger.php";
 
+    $user = authenticate();
     $data = json_decode(file_get_contents("php://input"));
-    var_dump($data);
+    //var_dump($data);
 
-    if (!empty($data->id) && !empty($data->name) && !empty($data->email) && !empty($data->password)) {
+    if ($data->id != $user->id && $user->role !== 'admin') {
+        http_response_code(403);
+        echo json_encode(["message" => "Você só pode editar o próprio perfil."]);
+        exit;
+    }
 
-        // Obtém os dados
-        /*$id = intval($data->id);
-        $name = trim($data->name);
-        $email = trim($data->email);
-        $password = password_hash($data->password, PASSWORD_DEFAULT); // Criptografa a senha*/
+    $db = (new Database())->getConnection();
+    $stmt = $db->prepare("UPDATE users SET name = :name, email = :email WHERE id = :id");
+    $stmt->bindParam(":name", $data->name);
+    $stmt->bindParam(":email", $data->email);
+    $stmt->bindParam(":id", $data->id);
+
+    if ($stmt->execute()) {
+        //Registra que foi atualizado o usuário
+        logActivity($user->id, "Atualizou usuário", $data->id, "Novo nome: {$data->name}");
+        echo json_encode(["message" => "Usuário atualizado com sucesso."]);
+    }
+
+    //Código antigo, antes da task de criar os logs
+    /*if (!empty($data->id) && !empty($data->name) && !empty($data->email) && !empty($data->password)) {
 
         $db = (new Database())->getConnection();
 
@@ -34,5 +50,5 @@
     } else {
         http_response_code(400);
         echo json_encode(["message" => "Dados incompletos."]);
-    }
+    }*/
 ?>

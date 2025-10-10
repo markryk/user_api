@@ -4,6 +4,7 @@ use Firebase\JWT\Key;
 
 require "../vendor/autoload.php";
 include_once "../config/Database.php";
+include_once "logger.php";
 
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -31,6 +32,9 @@ if ($user && password_verify($data->password, $user['password'])) {
 
     // Gerar Refresh Token (expira em 7 dias)
     $refresh_token = bin2hex(random_bytes(32));
+
+    // Registra que foi feito o login
+    logActivity($user['id'], "Login realizado", null, "Email: {$user['email']}");
 
     // Salvar refresh token no banco
     $stmt_update = $db->prepare("UPDATE users SET refresh_token = :refresh WHERE id = :id");

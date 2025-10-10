@@ -86,3 +86,12 @@ Explicação:
     Cada ação relevante (como promover alguém) é salva em activity_logs.
     O log guarda: quem fez (admin_id), o que fez (action) e em quem (target_user_id).
     O endpoint /api/logs.php mostra esse histórico — apenas para admins.
+
+Task: Implementar logs automáticos com uma função reutilizável
+Objetivo: Criar uma única função capaz de registrar qualquer ação importante (login, update, delete, promote, etc.), 
+afim de poder registrar logs em qualquer lugar da API com uma simples chamada.
+Passos:
+    1.  Criar o arquivo api/logger.php
+    2.  Atualizar a tabela activity_logs
+    3.  Usar a função nos principais endpoints (login, update, delete_user)
+Explicação: A função logActivity() centraliza todos os registros, e pode ser chamada de onde for necessário (login, update, delete, etc)
