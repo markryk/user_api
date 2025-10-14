@@ -121,8 +121,15 @@ Explicação:
     Ao promover um usuário, ele recebe uma notificação automática.
     Pode-se adaptar para outras ações (cadastro, reset de senha, etc.).
 
+
 Task: Reset de senha por email (token de recuperação com expiração)
 Passos:
     1.  Criar tabela de reset de senha
     2.  Endpoint: pedir reset — api/request_password_reset.php
     3.  Endpoint: efetivar reset — api/reset_password.php
+
+
+Task: Gerar relatórios PDF dos logs
+Passos:
+    1.  Instalar lib PDF (ex. Dompdf)
+    
