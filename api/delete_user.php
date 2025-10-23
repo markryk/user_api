@@ -23,6 +23,12 @@
     $admin = authenticate(true);
     $data = json_decode(file_get_contents("php://input"));
 
+    if (!$data->id) {
+        http_response_code(404);
+        echo json_encode(["message" => "Usuário não encontrado."]);
+        exit;
+    }
+
     $db = (new Database())->getConnection();
     $stmt = $db->prepare("DELETE FROM users WHERE id = :id");
     $stmt->bindParam(":id", $data->id);

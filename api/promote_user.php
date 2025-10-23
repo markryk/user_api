@@ -38,7 +38,11 @@
     }
 
     if ($stmt->execute()) {
-        logActivity($admin->id, "Promoveu usuário a admin", $data->id);
+        //Executa a atividade de promover user à admin
+        doActivity($data->id, "Promoveu usuário à admin");
+
+        //Registra a atividade
+        logActivity($admin->id, "Promoveu usuário à admin", $data->id);
 
         // Busca email do promovido
         $stmtMail = $db->prepare("SELECT email, name FROM users WHERE id = :id");

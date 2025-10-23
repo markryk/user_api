@@ -8,6 +8,12 @@
     $data = json_decode(file_get_contents("php://input"));
     //var_dump($data);
 
+    /*if (!$data) {
+        http_response_code(404);
+        echo json_encode(["message" => "Usuário não encontrado."]);
+        exit;
+    }*/
+
     if ($data->id != $user->id && $user->role !== 'admin') {
         http_response_code(403);
         echo json_encode(["message" => "Você só pode editar o próprio perfil."]);
@@ -21,7 +27,10 @@
     $stmt->bindParam(":id", $data->id);
 
     if ($stmt->execute()) {
-        //Registra que foi atualizado o usuário
+        //Executa a atividade de atualizar os dados do usuário
+        doActivity($data->id, "Atualizou usuário");
+
+        //Registra a atividade
         logActivity($user->id, "Atualizou usuário", $data->id, "Novo nome: {$data->name}");
         echo json_encode(["message" => "Usuário atualizado com sucesso."]);
     }

@@ -132,4 +132,4 @@ Passos:
 Task: Gerar relatórios PDF dos logs
 Passos:
     1.  Instalar lib PDF (ex. Dompdf)
-    
+    2.  Endpoint api/logs_pdf.php (gera PDF e envia como download)

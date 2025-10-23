@@ -2,6 +2,10 @@
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+
 require "../vendor/autoload.php";
 include_once "../config/Database.php";
 include_once "logger.php";
@@ -35,6 +39,7 @@ if ($user && password_verify($data->password, $user['password'])) {
 
     // Registra que foi feito o login
     logActivity($user['id'], "Login realizado", null, "Email: {$user['email']}");
+    //INSERT INTO activity_logs (admin_id, action, target_user_id, details)
 
     // Salvar refresh token no banco
     $stmt_update = $db->prepare("UPDATE users SET refresh_token = :refresh WHERE id = :id");
