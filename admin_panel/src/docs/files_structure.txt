@@ -1,0 +1,10 @@
+admin-panel/
+├─ src/
+│  ├─ api/            # chamadas HTTP (Axios)
+│  ├─ store/          # Pinia (estado global)
+│  ├─ views/          # telas (pages)
+│  ├─ components/     # componentes reaproveitáveis
+│  ├─ router/         # rotas (Vue Router)
+│  ├─ App.vue
+│  └─ main.js
+├─ package.json
