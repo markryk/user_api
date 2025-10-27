@@ -1,8 +1,9 @@
 <?php
-    use Firebase\JWT\JWT;
-
     require "../vendor/autoload.php";
     include_once "../config/Database.php";
+    include_once "cors.php";
+
+    use Firebase\JWT\JWT;
 
     header("Content-Type: application/json; charset=UTF-8");
 

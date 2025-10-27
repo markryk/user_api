@@ -1,10 +1,11 @@
 <?php
-    use Firebase\JWT\JWT;
-    use Firebase\JWT\Key;
-
     require "../vendor/autoload.php";
+    include_once "cors.php";
     include_once "../config/Database.php";
     include_once "auth.php"; //Função de autenticação nesse arquivo
+    
+    use Firebase\JWT\JWT;
+    use Firebase\JWT\Key;
 
     $user = authenticate(); //apenas requer login
     //$user = authenticate(true); //requer login + role admin

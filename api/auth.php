@@ -1,10 +1,8 @@
 <?php
+    include_once "cors.php";
+    
     use Firebase\JWT\JWT;
     use Firebase\JWT\Key;
-
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Headers: Content-Type, Authorization");
-    header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
     require "../vendor/autoload.php";
 

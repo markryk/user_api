@@ -1,12 +1,13 @@
 <?php
-    header("Content-Type: application/json; charset=UTF-8");
     include_once "../config/Database.php";
+    include_once "cors.php";
     include_once "auth.php";
     include_once "logger.php";
 
+    header("Content-Type: application/json; charset=UTF-8");
+
     $user = authenticate();
     $data = json_decode(file_get_contents("php://input"));
-    //var_dump($data);
 
     /*if (!$data) {
         http_response_code(404);

@@ -1,4 +1,6 @@
 <?php
+    include_once "cors.php";
+    
     use Firebase\JWT\JWT;
     use Firebase\JWT\Key;
 

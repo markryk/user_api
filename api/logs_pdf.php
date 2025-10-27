@@ -1,11 +1,13 @@
 <?php
-    // logs_pdf.php
     require "../vendor/autoload.php";
-    use Dompdf\Dompdf;
     include_once "../config/Database.php";
     include_once "auth.php";
+    include_once "cors.php";
+
+    use Dompdf\Dompdf;
 
     header("Content-Type: application/json; charset=UTF-8");
+
     $admin = authenticate(true); // só admins
     //$admin = (object)['mark' => 'mark@email.com']; // mock
 

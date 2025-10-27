@@ -1,5 +1,6 @@
 <?php
     include_once "../config/Database.php";
+    include_once "cors.php";
     include_once "auth.php";
 
     header("Content-Type: application/json; charset=UTF-8");

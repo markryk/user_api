@@ -1,4 +1,5 @@
 <?php
+include_once "cors.php";
 include_once "../config/Database.php";
 include_once "auth.php";
 include_once "logger.php";
