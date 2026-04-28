@@ -3,9 +3,7 @@
   <div class="flex bg-gray-100">
     <!-- Sidebar -->
     <!--<aside class="w-64 bg-blue-800 text-white flex flex-col">-->
-    <aside
-      :class="['bg-blue-800 text-white transition-all duration-300 flex flex-col']"
-    >
+    <aside :class="['bg-blue-800 text-white transition-all duration-300 flex flex-col']">
 
       <!-- Header Sidebar -->
       <div class="p-4 flex justify-between items-center border-b border-blue-700">
@@ -26,7 +24,7 @@
           class="flex items-center gap-3 py-2 px-3 rounded hover:bg-blue-700 transition"
         >
           <component :is="link.icon" :size="20" />
-          <span v-if="!collapsed">{{ link.label }}</span>
+          <span v-if="!collapsed"> {{ link.label }} </span>
         </router-link>
       </nav>
 
@@ -35,23 +33,11 @@
       <div class="p-3 border-t border-blue-700">
         <!--<v-btn prepend-icon="$vuetify" @click="logout" color="primary" variant="tonal"> Sairdes </v-btn>-->
 
-        <button
-          @click="logout"
-          class="w-full flex items-center gap-2 justify-center bg-red-600 hover:bg-red-700 py-2 rounded"
-        >
+        <button @click="logout" class="btn-sair">
           <LogOut :size="18" />
           <span v-if="!collapsed"> Sair </span>
         </button>
       </div>
-      
-      <!--Código antigo-->
-      <!--<div class="p-4 text-xl font-bold border-b border-blue-700"> Painel Admin </div>
-      <nav class="flex-1 p-4 space-y-2">
-        <router-link to="/dashboard" class="block py-2 px-3 rounded hover:bg-blue-700">🏠 Dashboard</router-link>
-        <router-link to="/users" class="block py-2 px-3 rounded hover:bg-blue-700">👥 Usuários</router-link>
-        <router-link to="/logs" class="block py-2 px-3 rounded hover:bg-blue-700">🧾 Logs</router-link>
-        <router-link to="/profile" class="block py-2 px-3 rounded hover:bg-blue-700">🙍 Perfil</router-link>
-      </nav>-->
     </aside>
 
     <!-- Conteúdo principal -->
@@ -60,8 +46,8 @@
       <header class="bg-white shadow p-4 flex justify-between items-center">
         
         <!--Código antigo-->
-        <h1 class="font-semibold text-lg">{{ title }}</h1>
-        <span class="text-gray-600">{{ user?.name }}</span>
+        <h1 class="font-semibold text-lg"> {{ title }} </h1>
+        <span class="text-gray-600"> {{ user?.name }} </span>
         
         <!-- Breadcrumbs -->
         <div class="text-sm text-gray-500 flex items-center gap-1">
@@ -73,18 +59,14 @@
             >
               {{ crumb.name }}
             </router-link>
-            <span v-else class="font-semibold text-gray-800">
-              {{ crumb.name }}
-            </span>
+            <span v-else class="font-semibold text-gray-800"> {{ crumb.name }} </span>
             <span v-if="index < breadcrumbs.length - 1">/</span>
           </template>
         </div>
 
         <br>
         <!-- Usuário -->
-        <span class="text-gray-600 font-medium">
-          {{ user?.name || "Usuário" }}
-        </span>
+        <span class="text-gray-600 font-medium"> {{ user?.name || "Usuário" }} </span>
       </header>
 
       <!-- Conteúdo da página -->
@@ -92,12 +74,6 @@
         <slot/>
       </main>
     </div>
-
-    <!--Código antigo
-    <div class="p-4 border-t border-blue-7000">
-      <button @click="logout" class="w-full bg-red-600 hover:bg-red-700 py-2 rounded"> Sair </button>
-    </div>-->
-    
   </div>
 </template>
 

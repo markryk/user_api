@@ -8,6 +8,39 @@
     $input = file_get_contents("php://input");
     $data = json_decode($input, true);
 
+    $name = trim($data['name'] ?? '');
+    $email = trim($data['email'] ?? '');
+    $password = $data['password'] ?? '';
+    $role = $data['role'] ?? 'user';
+
+    if (!$name || !$email || !$password) {
+    http_response_code(400);
+    echo json_encode(["message" => "Preencha todos os campos"]);
+    exit;
+    }
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        http_response_code(400);
+        echo json_encode(["message" => "Email inválido"]);
+        exit;
+    }
+
+    if (strlen($password) < 6) {
+        http_response_code(400);
+        echo json_encode(["message" => "Senha muito curta"]);
+        exit;
+    }
+
+    // verificar email existente
+    $stmt = $db->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+
+    if ($stmt->fetch()) {
+    http_response_code(400);
+    echo json_encode(["message" => "Email já cadastrado"]);
+    exit;
+    }
+
     $response = [];
 
     if (!$data) {
@@ -20,8 +53,17 @@
     if (isset($data["email"])) {
         $data = [$data];
     }
+
+    //Hash da senha
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    // inserir
+    $stmt = $db->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$name, $email, $hash, $role]);
+
+    echo json_encode(["success" => true]);
     
-    $query = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
+    /*$query = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
     $stmt = $db->prepare($query);
 
     //O código abaixo insere mais de um usuário por vez
@@ -52,7 +94,7 @@
                 "motivo" => "Campos faltando."
             ];
         }
-    }
+    }*/
     //até aqui
 
     //Código antigo (insere um usuário por vez)

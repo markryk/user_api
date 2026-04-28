@@ -1,24 +1,25 @@
 <template>
   <Layout title="Gerenciamento de Usuários">
-    <!--<h2 class="text-xl font-bold mb-4"> Gerenciamento de Usuários </h2>-->
 
     <!-- Recarregar tela de usuários -->
-    <button @click="loadUsers" class="bg-blue-500 text-white px-4 py-2 rounded mb-4"> Recarregar </button>
-    &nbsp;&nbsp;&nbsp;
+    <button @click="loadUsers" class="m-2 btn-primary"> Recarregar </button>
+
     <!-- Adicionar usuário -->
-    <button @click="createUser" class="bg-blue-500 text-white px-4 py-2 rounded mb-4"> Criar usuário </button>
+    <button @click="$router.push('/users/create')" class="m-2 btn-primary"> Criar usuário </button>
+
+    <CreateUser v-if="showCreate" @created="handleCreated" @cancel="showCreate = false"/>
+
     <br><br>
 
-    <!--<table class="w-full border">-->
     <table class="table-auto">
       <thead>
         <tr>
-          <th class="p-2 border">ID</th>
-          <th class="p-2 border">Nome</th>
-          <th class="p-2 border">Email</th>
-          <th class="p-2 border">Função</th>
-          <th class="p-2 border">Criado em</th>
-          <th class="p-2 border">Ações</th>
+          <th class="p-2 border"> ID </th>
+          <th class="p-2 border"> Nome </th>
+          <th class="p-2 border"> Email </th>
+          <th class="p-2 border"> Função </th>
+          <th class="p-2 border"> Criado em </th>
+          <th class="p-2 border"> Ações </th>
         </tr>
       </thead>
       <tbody>
@@ -44,25 +45,30 @@
   import { ref, onMounted } from "vue";
   import api from "../api/axios";
   import Layout from "../components/Layout.vue";
+  import CreateUser from "../views/CreateUser.vue";
 
   const users = ref([]);
+  const showCreate = ref(false);
 
   // Função para carregar usuários do backend
   async function loadUsers() {
     try {
       const { data } = await api.get("/users.php");
-      console.log("Usuários carregados:", data);
       users.value = data;
     } catch (error) {
-      //console.error("Erro ao carregar usuários:", error);
       console.error("Erro completo:", error.response?.data || error.message);
       alert("Não foi possível carregar os usuários. Verifique o token JWT :(");
     }
   }
 
-  async function createUser() {
-    const { data } = await api.post("/register.php");
+  function handleCreated() {
+    showCreate.value = false;
+    loadUsers();
   }
+
+  /*async function createUser() {
+    const { data } = await api.post("/register.php");
+  }*/
 
   // Formata data para exibição
   function formatDate(dateStr) {
