@@ -1,11 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard.vue";
+import Users from "../views/Users.vue";
+import Logs from "../views/Logs.vue";
+import Profile from "../views/Profile.vue";
+import ResetPassword from "../views/ResetPassword.vue";
 
 const routes = [
   { path: "/", redirect: "/login" },
   { path: "/login", component: Login },
   { path: "/dashboard", component: Dashboard },
+  { path: "/users", component: Users },
+  { path: "/logs", component: Logs },
+  { path: "/profile", component: Profile },
+  { path: "/reset/:token?", component: ResetPassword },
 ];
 
 const router = createRouter({
@@ -15,24 +23,8 @@ const router = createRouter({
 
 export default router;
 
-/*import { createRouter, createWebHistory } from "vue-router";
+/*
 import { useUserStore } from "../store/userStore";
-
-import Login from "../views/Login.vue";
-import Dashboard from "../views/Dashboard.vue";
-import Users from "../views/Users.vue";
-import Logs from "../views/Logs.vue";
-import Profile from "../views/Profile.vue";
-import ResetPassword from "../views/ResetPassword.vue";
-
-const routes = [
-  { path: "/", name: "Login", component: Login },
-  { path: "/dashboard", name: "Dashboard", component: Dashboard },
-  { path: "/users", component: Users },
-  { path: "/logs", component: Logs },
-  { path: "/profile", component: Profile },
-  { path: "/reset/:token?", component: ResetPassword },
-];
 
 const router = createRouter({
   history: createWebHistory(),
@@ -56,5 +48,4 @@ router.beforeEach((to, from, next) => {
   if (to.path !== "/" && !store.token) return next("/");
   next();
 });
-
-export default router;*/
+*/

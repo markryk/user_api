@@ -9,7 +9,7 @@
 
     // Parâmetros de filtro
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 100;
     $offset = ($page - 1) * $limit;
     $action = $_GET['action'] ?? '';
     $user = $_GET['user'] ?? '';

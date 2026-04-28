@@ -1,0 +1,122 @@
+/*@import './base.css';*/
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer components {
+
+  /** Início Tabela **/
+  .table-container {
+      @apply overflow-x-auto bg-white shadow-md rounded-lg;
+  }
+
+  .table {
+      @apply min-w-full border-collapse w-full;
+  }
+
+  .table-header {
+      @apply bg-blue-400 text-white uppercase text-sm leading-normal;
+  }
+
+  .table-header th {
+      @apply py-3 px-6 text-left;
+  }
+
+  .table-header .center {
+      @apply text-center;
+  }
+
+  .table-body {
+      @apply text-gray-700 text-sm font-light;
+  }
+
+  .table-row {
+      @apply border-b border-gray-200 hover:bg-blue-50 transition;
+  }
+
+  .table-cell {
+      @apply py-3 px-6;
+  }
+  .table-actions {
+      @apply py-3 px-6 text-center flex space-x-1;
+  }
+  /** Fim Tabela **/
+
+  /** Início botões **/
+  /*Botão azul*/
+  .btn-primary { 
+      @apply p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors;
+  }
+
+  .btn-primary-md { 
+      @apply bg-blue-500 text-white text-base px-2 py-2 rounded hover:bg-blue-600 transition-colors cursor-pointer;
+  }
+
+  /*Botão azul claro*/
+  .btn-info {
+      @apply p-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors;
+  }
+
+  /*Botão verde*/
+  .btn-success {
+      @apply p-2 bg-green-500 text-white rounded-md hover:bg-green-600 cursor-pointer transition-colors;
+  }
+
+  /*Botão amarelo*/
+  .btn-warning {
+      @apply p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 cursor-pointer transition-colors;
+  }
+
+  /*Botão laranja*/
+  .btn-orange {
+      @apply p-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 cursor-pointer transition-colors;
+  }
+
+  /*Botão vermelho*/
+  .btn-danger {
+      @apply p-2 bg-red-500 text-white rounded-md hover:bg-red-600 cursor-pointer transition-colors;
+  }
+
+  /*Botão cinza*/
+  .btn-gray {
+      @apply p-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 cursor-pointer transition-colors;
+  }
+
+  /** Fim botões **/
+}
+
+/*#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+}*/
