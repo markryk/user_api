@@ -30,7 +30,7 @@
           <td class="p-2 border">{{ u.role }}</td>
           <td class="p-2 border">{{ formatDate(u.created_at) }}</td>
           <td>
-            <button @click="del(u.id)" class="m-1 btn-warning"> Editar </button>
+            <button @click="$router.push(`/users/${u.id}/edit`)" class="m-1 btn-warning"> Editar </button>
             <button @click="promote(u.id)" class="m-1 btn-orange" v-if="u.role !== 'admin'"> Promover à admin </button>
             <button @click="del(u.id)" class="m-1 btn-danger"> Excluir </button>
           </td>
