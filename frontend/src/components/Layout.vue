@@ -1,8 +1,6 @@
 <template>
-  <br>
   <div class="flex bg-gray-100">
     <!-- Sidebar -->
-    <!--<aside class="w-64 bg-blue-800 text-white flex flex-col">-->
     <aside :class="['bg-blue-800 text-white transition-all duration-300 flex flex-col']">
 
       <!-- Header Sidebar -->
@@ -31,12 +29,12 @@
       <br>
       <!-- Rodapé -->
       <div class="p-3 border-t border-blue-700">
-        <!--<v-btn prepend-icon="$vuetify" @click="logout" color="primary" variant="tonal"> Sairdes </v-btn>-->
 
         <button @click="logout" class="btn-sair">
           <LogOut :size="18" />
           <span v-if="!collapsed"> Sair </span>
         </button>
+        
       </div>
     </aside>
 
@@ -45,27 +43,8 @@
       <!-- Navbar -->
       <header class="bg-white shadow p-4 flex justify-between items-center">
         
-        <!--Código antigo-->
+        <!-- Título e Usuário -->
         <h1 class="font-semibold text-lg"> {{ title }} </h1>
-        <span class="text-gray-600"> {{ user?.name }} </span>
-        
-        <!-- Breadcrumbs -->
-        <div class="text-sm text-gray-500 flex items-center gap-1">
-          <template v-for="(crumb, index) in breadcrumbs" :key="crumb.path">
-            <router-link
-              v-if="index < breadcrumbs.length - 1"
-              :to="crumb.path"
-              class="hover:text-blue-600"
-            >
-              {{ crumb.name }}
-            </router-link>
-            <span v-else class="font-semibold text-gray-800"> {{ crumb.name }} </span>
-            <span v-if="index < breadcrumbs.length - 1">/</span>
-          </template>
-        </div>
-
-        <br>
-        <!-- Usuário -->
         <span class="text-gray-600 font-medium"> {{ user?.name || "Usuário" }} </span>
       </header>
 
@@ -80,8 +59,12 @@
 <script setup>
   import api from "../api/axios";
   import { useUserStore } from "../store/userStore";
-  import { useRouter, useRoute } from "vue-router";
-  import { computed, ref } from "vue";
+  import { useRouter } from "vue-router";
+  import { computed, ref, onMounted } from "vue";
+
+  onMounted(() => {
+    store.fetchProfile();
+  });
 
   // Ícones Lucide
   import { Home, Users, FileText, User, LogOut, ChevronLeft, ChevronRight } from "lucide-vue-next";
@@ -89,7 +72,6 @@
   const props = defineProps({ title: String });
   const store = useUserStore();
   const router = useRouter();
-  const route = useRoute();
   const user = computed(() => store.user);
 
   const collapsed = ref(false);

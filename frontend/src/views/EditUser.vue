@@ -192,7 +192,7 @@
             router.push("/users");
 
         } catch (e) {
-            alert("Erro ao atualizar");
+            alert("Erro ao atualizar! (ação permitida somente para admin, você só pode editar o próprio perfil.)");
         } finally {
             loading.value = false;
         }

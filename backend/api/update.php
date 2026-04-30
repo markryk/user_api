@@ -22,9 +22,10 @@
     }
 
     $db = (new Database())->getConnection();
-    $stmt = $db->prepare("UPDATE users SET name = :name, email = :email WHERE id = :id");
+    $stmt = $db->prepare("UPDATE users SET name = :name, email = :email, role = :role WHERE id = :id");
     $stmt->bindParam(":name", $data->name);
     $stmt->bindParam(":email", $data->email);
+    $stmt->bindParam(":role", $data->role);
     $stmt->bindParam(":id", $data->id);
 
     if ($stmt->execute()) {

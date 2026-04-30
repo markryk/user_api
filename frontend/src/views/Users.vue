@@ -36,7 +36,6 @@
           </td>
         </tr>
       </tbody>
-      
     </table>
   </Layout>
 </template>
@@ -66,24 +65,32 @@
     loadUsers();
   }
 
-  /*async function createUser() {
-    const { data } = await api.post("/register.php");
-  }*/
-
   // Formata data para exibição
   function formatDate(dateStr) {
     return new Date(dateStr).toLocaleDateString("pt-BR");
   }
 
   async function promote(id) {
-    await api.post("/promote_user.php", { id });
-    alert("Usuário promovido e notificado por email!");
+    try {
+      await api.post("/promote_user.php", { id });
+      alert("Usuário promovido e notificado por email!");
+    } catch (error) {
+      console.error("Erro completo:", error.response?.data || error.message);
+      alert("Ação permitida somente para administradores!");
+    }
+    
     loadUsers();
   }
 
   async function del(id) {
-    await api.post("/delete_user.php", { id });
-    alert("Usuário deletado!");
+    try {
+      await api.post("/delete_user.php", { id });
+      alert("Usuário deletado!");
+    } catch (error) {
+      console.error("Erro completo:", error.response?.data || error.message);
+      alert("Usuário não pode ser excluído, verificar tabela de logs!")
+    }
+    
     loadUsers();
   }
 

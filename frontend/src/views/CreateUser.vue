@@ -23,12 +23,12 @@
             <span class="msg-error">{{ errors.password }}</span>
 
             <!-- Tipo de usuário -->
-            <select v-model="form.role" @change="validateField('role')" :class="inputClass(errors.role, form.role)">
+            <!--<select v-model="form.role" @change="validateField('role')" :class="inputClass(errors.role, form.role)">
                 <option value=""> Tipo de usuário </option>
                 <option value="user"> Usuário </option>
                 <option value="admin"> Admin </option>
             </select>
-            <span class="text-red-500 text-sm">{{ errors.role }}</span>
+            <span class="text-red-500 text-sm">{{ errors.role }}</span>-->
 
 
             <div class="mt-3">
@@ -59,8 +59,8 @@
 
     let emailTimeout = null;
     
-    const form = ref({name: "", email: "", password: "", role: ""});
-    const errors = ref({name: "", email: "", password: "", role: ""});
+    const form = ref({name: "", email: "", password: ""});
+    const errors = ref({name: "", email: "", password: ""});
 
     //Classes dinâmicas estilo SaaS
     function inputClass(error, value) {
@@ -96,9 +96,9 @@
                 }
             break;
 
-            case "role":
+            /*case "role":
                 errors.value.role = form.value.role ? "" : "Selecione um tipo de usuário";
-            break;
+            break;*/
         }
     }
 
@@ -139,7 +139,6 @@
         }
     }
 
-
     //Validação antes de enviar
     function validateAll() {
         validateField("name");
@@ -162,7 +161,7 @@
             router.push("/users"); //volta pra lista
 
         } catch (error) {
-            // tratamento de erro do backend (email duplicado)
+            //Tratamento de erro do backend (email duplicado)
             if (error.response?.data?.message) {
                 errors.value.email = error.response.data.message;
             } else {
