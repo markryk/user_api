@@ -94,4 +94,8 @@
   .msg-error {
     @apply text-red-500 text-sm;
   }
+
+  .msg-loading-email {
+    @apply text-gray-500 text-sm;
+  }
 }
