@@ -5,12 +5,16 @@ import Users from "../views/Users.vue";
 import Logs from "../views/Logs.vue";
 import Profile from "../views/Profile.vue";
 import ResetPassword from "../views/ResetPassword.vue";
+import CreateUser from "../views/CreateUser.vue";
+import EditUser from "../views/EditUser.vue";
 
 const routes = [
   { path: "/", redirect: "/login" },
   { path: "/login", component: Login },
   { path: "/dashboard", component: Dashboard },
-  { path: "/users", component: Users },
+  { path: "/users", name: Users, component: Users },
+  { path: "/users/create", name: "CreateUser", component: CreateUser },
+  { path: "/users/:id/edit", name: "EditUser", component: EditUser, props: true },
   { path: "/logs", component: Logs },
   { path: "/profile", component: Profile },
   { path: "/reset/:token?", component: ResetPassword },

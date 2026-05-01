@@ -3,10 +3,14 @@ import api from "../api/axios";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    token: localStorage.getItem("token") || null,
+    //token: localStorage.getItem("token") || null,
     user: null
   }),
   actions: {
+    setUser(userData) {
+      this.user = userData;
+    },    
+
     async login(email, password) {
       try {
         const { data } = await api.post("/login.php", { email, password });
@@ -35,12 +39,13 @@ export const useUserStore = defineStore("user", {
       api.get("/logout.php");
       
       this.user = null;
-      this.token = null;
-      localStorage.removeItem("token");
+      //this.token = null;
+      //localStorage.removeItem("token");
 
       alert("Logout realizado com sucesso!");
     },
 
+    //Função que retorna o nome do usuário logado
     async fetchProfile() {
       const { data } = await api.get("/profile.php");
       this.user = data;
