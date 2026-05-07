@@ -10,10 +10,10 @@ Frontend: VueJS
 
 - Rodar backend (navegar até arquivo backend)
 ```
-php -S localhost:8000 -t .
+php -S localhost:8000 -t . (primeiramente, utilizar "composer install")
 ```
 
 - Rodar frontend (navegar até arquivo frontend)
 ```
-npm run dev
+npm run dev (primeiramente, utilizar "npm install")
 ```

@@ -1,4 +1,6 @@
 <?php
+    $debug = isset($_GET['debug']) && $_GET['debug'] == '1';
+
     require "../vendor/autoload.php";
     include_once "../config/Database.php";
     include_once "auth.php";
@@ -24,6 +26,7 @@
     LEFT JOIN users t ON t.id = l.target_user_id
     WHERE 1=1
     ";
+
     $params = [];
     if ($action) {
         $query .= " AND l.action LIKE :action";
@@ -44,6 +47,21 @@
     $stmt->execute();
     $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    if ($debug) {
+        header("Content-Type: application/json; charset=UTF-8");
+        echo json_encode([
+            "filters" => [
+                "action" => $action,
+                "from" => $from,
+                "to" => $to
+            ],
+            "total" => count($logs),
+            "data" => $logs
+        ], JSON_PRETTY_PRINT);
+
+        exit;
+    }
+
     // Monta HTML do relatório
     $html = '<html><head><meta charset="utf-8"><style>
     body{font-family: DejaVu Sans, sans-serif;font-size:12px}
@@ -51,7 +69,7 @@
     th,td{border:1px solid #ddd;padding:6px}
     th{background:#f5f5f5}
     </style></head><body>';
-    $html .= "<h2>Relatório de Logs</h2>";
+    $html .= "<header> Relatório de Logs </header>";
     $html .= "<p>Gerado por: {$admin->email} em ".date('Y-m-d H:i:s')."</p>";
     $html .= "<table><thead><tr><th>ID</th><th>Admin</th><th>Ação</th><th>Alvo</th><th>Detalhes</th><th>Data</th></tr></thead><tbody>";
     foreach ($logs as $l) {
@@ -64,13 +82,25 @@
         $html .= "<td>{$l['created_at']}</td>";
         $html .= "</tr>";
     }
-    $html .= "</tbody></table></body></html>";
+    $html .= "</tbody></table><footer> Gerado automaticamente </footer></body></html>";
 
     // Gerar PDF com Dompdf
     $dompdf = new Dompdf();
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();
+
+    $canvas = $dompdf->getCanvas();
+    $font = $dompdf->getFontMetrics()->get_font("Helvetica", "normal");
+
+    $canvas->page_text(
+        520, 800, // posição (x, y)
+        "Página {PAGE_NUM} de {PAGE_COUNT}",
+        $font,
+        10,
+        array(0, 0, 0)
+    );
+
     $filename = 'logs_'.date('Ymd_His').'.pdf';
 
     // Enviar PDF para download

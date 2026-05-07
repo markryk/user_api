@@ -95,6 +95,11 @@
 
   /** Fim botões **/
 
+  /*Bordas arredondadas*/
+  .rounded-border {
+    @apply border p-2 rounded
+  }
+
   /*Mensagem de erro*/
   .msg-error {
     @apply text-red-500 text-sm;
@@ -103,4 +108,8 @@
   .msg-loading-email {
     @apply text-gray-500 text-sm;
   }
+
+  /*.profile-card {
+    @apply bg-neutral-primary-soft block max-w-sm p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium;
+  }*/
 }
