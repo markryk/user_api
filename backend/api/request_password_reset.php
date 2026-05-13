@@ -1,9 +1,10 @@
 <?php
     // request_password_reset.php
     require "../vendor/autoload.php";
+    include_once "cors.php";
+    include_once "mailer.php";
     include_once "../config/Database.php";
-    include_once "mailer.php"; // já implementado
-    header("Content-Type: application/json; charset=UTF-8");
+    //header("Content-Type: application/json; charset=UTF-8"); //Esse código já está em mailer.php: "$mail->CharSet = 'UTF-8';"
 
     $data = json_decode(file_get_contents("php://input"));
     if (empty($data->email)) {
@@ -25,7 +26,11 @@
     }
 
     // Gerar token seguro (texto que será enviado por email)
-    $token = bin2hex(random_bytes(32)); // 64 hex chars
+    //$token = bin2hex(random_bytes(32)); // 64 hex chars
+    $token = bin2hex(random_bytes(16)); // 64 hex chars
+    //$token = bin2hex(random_bytes(8)); // 64 hex chars
+    //$token = bin2hex(random_bytes(4)); // 64 hex chars
+    //$token = bin2hex(random_bytes(2)); // 64 hex chars
     $token_hash = password_hash($token, PASSWORD_DEFAULT); // armazena hash
     $expires_at = date('Y-m-d H:i:s', time() + 60*60); // expira em 1h
 
@@ -42,7 +47,8 @@
     $ins->execute();
 
     // Enviar email com link (ex: https://seusite.com/reset_password.php?token=...)
-    $resetLink = "https://seusite.com/reset_password.php?token=" . $token;
+    //$resetLink = "https://localhost:5173/reset_password.php?token=" . $token;
+    $resetLink = "http://localhost:5173/reset/".$token;
     $subject = "Redefinição de senha";
     $body = "<p>Olá {$user['name']},</p>
             <p>Recebemos uma solicitação para redefinir sua senha. Clique no link abaixo para criar uma nova senha. O link expira em 1 hora.</p>

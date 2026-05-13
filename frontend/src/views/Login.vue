@@ -8,31 +8,21 @@
 
       <!-- Inputs -->
       <div class="flex flex-col gap-4">
-        <input
-          v-model="email"
-          placeholder="Email"
-          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition rounded-lg p-3 outline-none"
-        />
+        <input v-model="email" placeholder="Email" class="login-input"/>
 
-        <input
-          v-model="password"
-          type="password"
-          placeholder="Senha"
-          class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition rounded-lg p-3 outline-none"
-        />
+        <input v-model="password" type="password" placeholder="Senha" class="login-input"/>
 
         <!-- Botão -->
         <button @click="login" class="btn-primary"> Entrar </button>
 
         <!-- Erro -->
-        <p v-if="error" class="text-red-500 text-sm text-center"> {{ error }} </p>
+        <p v-if="error" class="msg-error text-center"> {{ error }} </p>
       </div>
 
       <!-- Rodapé -->
-      <p class="text-gray-500 text-sm text-center mt-6">
-        Não tem conta?
-        <span class="text-blue-600 cursor-pointer hover:underline">
-          Criar conta
+      <p class="text-center mt-6">
+        <span @click="$router.push('/reset')" class="text-blue-600 cursor-pointer hover:text-blue-900">
+          Esqueci a senha
         </span>
       </p>
     </div>

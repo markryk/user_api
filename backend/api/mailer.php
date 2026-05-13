@@ -15,6 +15,7 @@
         try {
             // Configuração do servidor SMTP (use seu provedor)
             $mail->isSMTP();
+            $mail->CharSet = 'UTF-8';
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = getenv('EMAIL_USERNAME');
@@ -23,7 +24,7 @@
             $mail->Port = 587;
 
             // Configurações da mensagem
-            $mail->setFrom(getenv('EMAIL_USERNAME'), 'API Exemplo');
+            $mail->setFrom(getenv('EMAIL_USERNAME'), 'Sistema PHP + Vue');
             $mail->addAddress($to);
             $mail->isHTML(true);
             $mail->Subject = $subject;

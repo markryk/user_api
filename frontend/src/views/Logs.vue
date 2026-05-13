@@ -88,11 +88,18 @@
   const page = ref(1);
   const limit = 10;
 
+  //Carregar os logs
   async function loadLogs() {
-    //Variável "query" recebe os filtros da pesquisa, que será incorporada à variável "data"
-    const query = new URLSearchParams({...filter.value, page: page.value, limit}).toString();
-    const { data } = await api.get(`/logs.php?${query}`);
-    logs.value = data;
+    try {
+      //Variável "query" recebe os filtros da pesquisa, que será incorporada à variável "data"
+      const query = new URLSearchParams({...filter.value, page: page.value, limit}).toString();
+      const { data } = await api.get(`/logs.php?${query}`);
+      logs.value = data;
+    } catch (error) {
+      console.error("Erro ao visualizar logs:", error.response?.data || error.message);
+      alert("Acesso negado. Somente administradores.");
+    }
+    
   }
 
   function formatDate(dateStr) {
@@ -101,13 +108,9 @@
   }
 
   async function downloadPDF() {
+
     try {
-
       const loading = ref(false);
-      /*const response = await api.get("/logs_pdf.php", {
-        responseType: "blob", // recebe como arquivo binário
-      });*/
-
       const query = new URLSearchParams(filter.value).toString();
 
       const response = await api.get(`/logs_pdf.php?{$query}`, {

@@ -2,11 +2,11 @@
   <div class="p-4 max-w-md mx-auto">
     <h2 class="text-xl font-bold mb-4">Redefinir Senha</h2>
     <input v-model="email" placeholder="Seu email" class="border p-2 w-full mb-2" v-if="!token" />
-    <button v-if="!token" @click="requestReset" class="bg-blue-500 text-white px-4 py-2 rounded w-full">Enviar link</button>
+    <button v-if="!token" @click="requestReset" class="btn-primary w-full"> Enviar link </button>
 
     <div v-if="token">
       <input v-model="newPassword" type="password" placeholder="Nova senha" class="border p-2 w-full mb-2" />
-      <button @click="resetPassword" class="bg-green-500 text-white px-4 py-2 rounded w-full">Atualizar senha</button>
+      <button @click="resetPassword" class="btn-success w-full"> Atualizar senha </button>
     </div>
   </div>
 </template>

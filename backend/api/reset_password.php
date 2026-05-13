@@ -1,8 +1,10 @@
 <?php
     // reset_password.php
     require "../vendor/autoload.php";
+    include_once "cors.php";
+    include_once "mailer.php";
     include_once "../config/Database.php";
-    header("Content-Type: application/json; charset=UTF-8");
+    //header("Content-Type: application/json; charset=UTF-8");
 
     $data = json_decode(file_get_contents("php://input"));
     $token = $data->token ?? '';
@@ -36,21 +38,21 @@
         exit;
     }
 
-    // Atualizar senha do usuário
+    // Atualiza senha do usuário
     $newHash = password_hash($newPassword, PASSWORD_DEFAULT);
     $upd = $db->prepare("UPDATE users SET password = :pwd WHERE id = :uid");
     $upd->bindParam(":pwd", $newHash);
     $upd->bindParam(":uid", $found['user_id']);
     $upd->execute();
 
-    // Remover todos os tokens desse usuário (invalida tokens)
+    // Remove todos os tokens desse usuário (invalidando esses tokens)
     $del = $db->prepare("DELETE FROM password_resets WHERE user_id = :uid");
     $del->bindParam(":uid", $found['user_id']);
     $del->execute();
 
-    // Opcional: notificar por email que senha foi alterada
+    // Notifica por email que senha foi alterada
     $subject = "Sua senha foi alterada";
-    $body = "<p>Olá,</p><p>Sua senha foi alterada com sucesso. Se você não fez essa alteração, contate o suporte.</p>";
+    $body = "<p> Olá, sua senha foi alterada com sucesso. Se você não fez essa alteração, contate o suporte. </p>";
     sendMail($found['email'], $subject, $body);
 
     echo json_encode(["message" => "Senha alterada com sucesso."]);
